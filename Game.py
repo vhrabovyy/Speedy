@@ -100,6 +100,16 @@ class Game:
                     y = random.randint(-1600,-self.racecar.carrect.height)
                     isy = 0
         car.place(x[0],y)
+    def game_over(self):
+        pygame.mixer.music.stop()
+        pygame.mixer.Sound.play(gl.crash_sound)
+                        
+        colision = Text('Game Over', (gl.WIDTH//2,gl.HEIGHT//2), 100, pygame.color.THECOLORS['red'])
+        colision.draw(gl.gameDisplay, 'center')
+        gl.fuel = gl.fuel_reset
+        gl.game_start = False
+        gl.game_menu = True
+        gl.game_exit = True
 
 
     def game_loop(self):
@@ -116,7 +126,12 @@ class Game:
             self.random_cordinates(car)
             self.car_group.add(car)
 
-        
+        fuel_reduce_event = pygame.USEREVENT + 1
+        #zmniejszanie paliwa co fuel_reduce
+        pygame.time.set_timer(fuel_reduce_event, gl.fuel_reduce)
+
+        #resetowanie fuel
+        gl.fuel = gl.fuel_reset
         while not gl.game_exit:
             for event in pygame.event.get():
                 #czerwony krzyrzyk spowoduje wymuszone zamknięcie gry
@@ -132,6 +147,9 @@ class Game:
                         self.check(event)
                     if event.type == pygame.KEYUP:
                         self.racecar.move(event)
+                    if event.type == fuel_reduce_event:
+                        if gl.fuel>=0:
+                            gl.fuel -= 1
                         
             #wypełnienie powierzchni ekranu
             gl.gameDisplay.blit(gl.background,[0,gl.background_move])
@@ -148,21 +166,14 @@ class Game:
                 #sprawdzanie kolizji
                 if car.carrect.bottom >= self.racecar.carrect.y:
                     if car.carrect.x == self.racecar.carrect.x:
-                        pygame.mixer.music.stop()
-                        pygame.mixer.Sound.play(gl.crash_sound)
-                        
-                        colision = Text('Game Over', (gl.WIDTH//2,gl.HEIGHT//2), 100, pygame.color.THECOLORS['red'])
-                        colision.draw(gl.gameDisplay, 'center')
-                        
-                        gl.game_start = False
-                        gl.game_menu = True
-                        gl.game_exit = True
-
-
-                
+                        self.game_over()
                 
                 car.carrect.y+=gl.car_speed
                 car.place()
+            #sprawdzanie czy nie wyczerpało się paliwo
+            if gl.fuel<=0:
+                self.game_over()
+                
             
             if(gl.background_move >= gl.HEIGHT):
                 gl.background_move = 0
@@ -194,8 +205,6 @@ class Game:
                 pygame.draw.rect(gl.gameDisplay, pygame.color.THECOLORS['red'],
                 (gl.WIDTH-(gl.WIDTH*0.08+((i+1)*(fuel_width+5))),gl.HEIGHT*0.03, fuel_width,gl.HEIGHT*0.02))
                                  
-
-            
             #odświeżanie ekranu
             pygame.display.flip()
             pygame.display.update()

@@ -74,11 +74,14 @@ difficulty = 'easy'
 difficult_set = False
 
 #fuel control
-fuel = 10
+fuel_reset = 10
+fuel = fuel_reset
 
 #fuel png
 fuel_image = os.path.join(os.getcwd(), 'img','fuel_red.png')
 
+#fuel reduce
+fuel_reduce = 6000
 
 #Files
 
