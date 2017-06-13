@@ -73,6 +73,13 @@ difficulty = 'easy'
 
 difficult_set = False
 
+#fuel control
+fuel = 10
+
+#fuel png
+fuel_image = os.path.join(os.getcwd(), 'img','fuel_red.png')
+
+
 #Files
 
 #os.path.join('img','racecarmy.png'))

@@ -183,6 +183,18 @@ class Game:
                               str(Game.best_scores[gl.difficulty]),
                               (0,gl.HEIGHT*0.05))
             best_score.draw(gl.gameDisplay)
+
+            #paliwo wypisanie
+            fuel = Car(gl.fuel_image,
+                       gl.WIDTH-((pygame.image.load(gl.fuel_image)).get_rect().width+gl.WIDTH*0.02),
+                       gl.HEIGHT*0.01)
+            fuel.place()
+            fuel_width = gl.WIDTH*0.02
+            for i in range(gl.fuel):
+                pygame.draw.rect(gl.gameDisplay, pygame.color.THECOLORS['red'],
+                (gl.WIDTH-(gl.WIDTH*0.08+((i+1)*(fuel_width+5))),gl.HEIGHT*0.03, fuel_width,gl.HEIGHT*0.02))
+                                 
+
             
             #odświeżanie ekranu
             pygame.display.flip()
