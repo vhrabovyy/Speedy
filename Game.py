@@ -3,6 +3,7 @@ import Globals as gl
 from Car import Car
 from Text import Text
 from Button import Button
+from Bonus import Bonus
 
 class Game:
     best_score_easy = 0
@@ -79,6 +80,71 @@ class Game:
         pygame.quit()
         sys.exit()
     
+##    flaga_bonus = False
+##    cl_bonus = i_bonus = 0
+##    bonu_obj = False
+##
+##    def bounus(self):
+##        Bonus.dodaj(gl.bonus)
+##        if Game.refuel_obj:
+##            Game.refuel_obj.place()                
+##            #sprawdzanie pobrania
+##            if Game.refuel_obj.carrect.bottom >= self.racecar.carrect.y:
+##                if Game.refuel_obj.carrect.x == self.racecar.carrect.x:
+##                    del Game.refuel_obj
+##                    Game.flaga_refuel = False
+##                    Game.refuel_obj = False
+##                    if gl.fuel < gl.fuel_reset:
+##                        if gl.fuel+gl.fuel_reset//2>gl.fuel_reset:
+##                            gl.fuel = gl.fuel_reset
+##                        else:
+##                            gl.fuel += gl.fuel_reset//2
+##                del Game.refuel_obj
+##                Game.flaga_refuel = False
+##                Game.refuel_obj = False
+##                        
+##            elif Game.refuel_obj.carrect.y>=gl.HEIGHT:
+##                del Game.refuel_obj
+##                Game.flaga_refuel = False
+##                Game.refuel_obj = False
+##            else:
+##                Game.refuel_obj.carrect.y += 10
+    
+    flaga_refuel = False
+    cl_refuel = i_refuel = 0
+    refuel_obj = False 
+    def refuel(self):
+        clock = pygame.time.get_ticks()
+        if not Game.flaga_refuel:
+            Game.cl_refuel = clock
+            Game.i_refuel = random.randint(1,10)*1000
+            Game.flaga_refuel = True
+        if clock in range((Game.cl_refuel+Game.i_refuel)-15,(Game.cl_refuel+Game.i_refuel)+15):
+                x = gl.position[random.randint(0,2)]
+                y = random.randint(1,200)
+                Game.refuel_obj = Car(gl.refuel,x[0],-y)
+
+                
+        if Game.refuel_obj:
+            Game.refuel_obj.place()                
+            #sprawdzanie pobrania
+            Game.refuel_obj.carrect.y += 10
+            if Game.refuel_obj.carrect.y>=gl.HEIGHT:
+                del Game.refuel_obj
+                Game.flaga_refuel = False
+                Game.refuel_obj = False
+            elif Game.refuel_obj.carrect.bottom >= self.racecar.carrect.y:
+                if Game.refuel_obj.carrect.x == self.racecar.carrect.x:
+                    del Game.refuel_obj
+                    Game.flaga_refuel = False
+                    Game.refuel_obj = False
+                    if gl.fuel < gl.fuel_reset:
+                        if gl.fuel+gl.fuel_reset//2>gl.fuel_reset:
+                            gl.fuel = gl.fuel_reset
+                        else:
+                            gl.fuel += gl.fuel_reset//2
+ 
+
     def random_cordinates(self,car):
         # 3 position
         isx = 0
@@ -100,6 +166,7 @@ class Game:
                     y = random.randint(-1600,-self.racecar.carrect.height)
                     isy = 0
         car.place(x[0],y)
+        
     def game_over(self):
         pygame.mixer.music.stop()
         pygame.mixer.Sound.play(gl.crash_sound)
@@ -113,13 +180,12 @@ class Game:
 
 
     def game_loop(self):
-
         #music
         pygame.mixer.music.play(-1)
 
         #ustaw samochod na początkową pozycję ekranu
         self.racecar.place(gl.center_position[0],gl.center_position[1])
-    
+        
         #randowanie pozycji samochodów
         for i in range(gl.car_count):
             car = Car(gl.cars[random.randint(0,5)])
@@ -132,6 +198,12 @@ class Game:
 
         #resetowanie fuel
         gl.fuel = gl.fuel_reset
+
+        #resetowanie refuel
+        Game.flaga_refuel = False
+        Game.cl_refuel = Game.i_refuel = 0
+        Game.refuel_obj = False
+        
         while not gl.game_exit:
             for event in pygame.event.get():
                 #czerwony krzyrzyk spowoduje wymuszone zamknięcie gry
@@ -204,7 +276,10 @@ class Game:
             for i in range(gl.fuel):
                 pygame.draw.rect(gl.gameDisplay, pygame.color.THECOLORS['red'],
                 (gl.WIDTH-(gl.WIDTH*0.08+((i+1)*(fuel_width+5))),gl.HEIGHT*0.03, fuel_width,gl.HEIGHT*0.02))
-                                 
+            #randowanie tankowania
+            self.refuel()
+            #bonusy
+            #self.bonus()
             #odświeżanie ekranu
             pygame.display.flip()
             pygame.display.update()

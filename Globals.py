@@ -32,15 +32,15 @@ backgroundrect = background.get_rect()
 menu_background = pygame.image.load(os.path.join(os.getcwd(), 'img','checkered-flag-background.png'))
 
 
-carrect = pygame.image.load(os.path.join(os.getcwd(), 'img','racecar.png'))
-carrect = carrect.get_rect()
+maincar = pygame.image.load(os.path.join(os.getcwd(), 'img','racecar.png'))
+maincarrect = maincar.get_rect()
 car_move = 250
 x_car_move = 0
 
 
-right_position = ((WIDTH-carrect.width)//2+car_move, HEIGHT-carrect.height+40)
-center_position = ((WIDTH-carrect.width)//2, HEIGHT-carrect.height)
-left_position = ((WIDTH-carrect.width)//2-car_move, HEIGHT-carrect.height+40)
+right_position = ((WIDTH-maincarrect.width)//2+car_move, HEIGHT-maincarrect.height+40)
+center_position = ((WIDTH-maincarrect.width)//2, HEIGHT-maincarrect.height)
+left_position = ((WIDTH-maincarrect.width)//2-car_move, HEIGHT-maincarrect.height+40)
 position = [right_position, center_position, left_position]
 background_move = 0
 speed = 3
@@ -69,7 +69,7 @@ difficulties = {'easy': (6,2),
                 'GOD': (20,2)
                 }
                 
-difficulty = 'easy'
+difficulty = 'hard'
 
 difficult_set = False
 
@@ -81,14 +81,20 @@ fuel = fuel_reset
 fuel_image = os.path.join(os.getcwd(), 'img','fuel_red.png')
 
 #fuel reduce
-fuel_reduce = 6000
+fuel_reduce = 2000
+
+#refuel icon
+refuel = os.path.join(os.getcwd(), 'img','refuel.png')
+
+#bonus x2 score icon
+bonus = os.path.join(os.getcwd(), 'img','coin.png')
 
 #Files
 
 #os.path.join('img','racecarmy.png'))
 
 #Version
-VERSION = 0.0
+VERSION = 1.0
 #Caption(game name)
 CAPTION = "Speedy"
 
