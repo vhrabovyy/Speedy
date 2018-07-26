@@ -1,0 +1,5 @@
+pyinstaller --add-data="img/;./img" --add-data="fonts/;./fonts" --add-data="sounds/;./sounds" -n Speedy --distpath Speedy --clean Main.py
+
+
+
+--icon="./img/icon.ico" 
