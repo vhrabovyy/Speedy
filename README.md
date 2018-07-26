@@ -1,11 +1,10 @@
 # Speedy
 
-### This game is my first experience creating PC 2D games with ```Pyton``` and ```pygame```. 
+### This game is my first experience in creating PC 2D games with ```Python``` and ```pygame```. 
 
-### The game was created on my own. It is not inovatory and it is not suppose to be such. It is simple racing 2D game, wich remains those "good times" when we do not have to have an extra-class dedicated video card to run games. 
+### The game was created merely by myself. It is not inovatory one and it's not supposed to be such. It is a simple racing 2D game, wich remains those "old good times" when you did not need to have an extra-class video card to run games. 
 
-### While coding it my goal was to learn mechanisms of Python and game "physics".
+### While coding these game my goal was to learn the mechanisms of Python and game "physics".
 ![Speedy](/img/Screenshot-game-over.png)
-### If you want to **download game**(without source code) download only **folder** with game name - **Speedy**. In order to open the game in downloaded folder find the .exe file e.g. **Speedy.exe**.
+### If you want to **download the game** (without source code), download only **folder** with the games name **Speedy**. In order to open the game in downloaded folder find the .exe file e.g. **Speedy.exe**.
 
-    
